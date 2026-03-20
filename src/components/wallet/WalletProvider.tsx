@@ -1,14 +1,18 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, ReactNode } from "react";
 import { WalletAdapterNetwork } from "@solana/wallet-adapter-base";
-import { ConnectionProvider, WalletProvider } from "@solana/wallet-adapter-react";
+import { ConnectionProvider, WalletProvider as SolanaWalletProvider } from "@solana/wallet-adapter-react";
 import { WalletModalProvider } from "@solana/wallet-adapter-react-ui";
 import { PhantomWalletAdapter, SolflareWalletAdapter } from "@solana/wallet-adapter-wallets";
 import { DEVNET_RPC } from "@/lib/constants";
 import "@solana/wallet-adapter-react-ui/styles.css";
 
-export function SolanaWalletProvider({ children }: { children: React.ReactNode }) {
+interface WalletProviderProps {
+  children: ReactNode;
+}
+
+export function WalletProvider({ children }: WalletProviderProps) {
   const wallets = useMemo(
     () => [
       new PhantomWalletAdapter(),
@@ -19,9 +23,9 @@ export function SolanaWalletProvider({ children }: { children: React.ReactNode }
 
   return (
     <ConnectionProvider endpoint={DEVNET_RPC}>
-      <WalletProvider wallets={wallets} autoConnect>
+      <SolanaWalletProvider wallets={wallets} autoConnect>
         <WalletModalProvider>{children}</WalletModalProvider>
-      </WalletProvider>
+      </SolanaWalletProvider>
     </ConnectionProvider>
   );
 }
