@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { SolanaWalletProvider } from "@/components/wallet/WalletProvider";
+import WalletProvider from "@/components/wallet/WalletProvider";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +14,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <SolanaWalletProvider>{children}</SolanaWalletProvider>
+        <WalletProvider>{children}</WalletProvider>
       </body>
     </html>
   );
