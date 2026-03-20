@@ -21,11 +21,15 @@ export default function WalletProvider({ children }: WalletProviderProps) {
     []
   );
 
+  const ConnectionProviderAny = ConnectionProvider as any;
+  const SolanaWalletProviderAny = SolanaWalletProvider as any;
+  const WalletModalProviderAny = WalletModalProvider as any;
+
   return (
-    <ConnectionProvider endpoint={DEVNET_RPC}>
-      <SolanaWalletProvider wallets={wallets} autoConnect>
-        <WalletModalProvider>{children}</WalletModalProvider>
-      </SolanaWalletProvider>
-    </ConnectionProvider>
+    <ConnectionProviderAny endpoint={DEVNET_RPC}>
+      <SolanaWalletProviderAny wallets={wallets} autoConnect>
+        <WalletModalProviderAny>{children}</WalletModalProviderAny>
+      </SolanaWalletProviderAny>
+    </ConnectionProviderAny>
   );
 }
