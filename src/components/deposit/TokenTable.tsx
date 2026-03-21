@@ -13,7 +13,6 @@ import { getConfigPda, getCyclePda, getContributorPda, getTokenVaultPda, getFeeV
 import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { BN } from "@coral-xyz/anchor";
 import Image from "next/image";
-import { notify } from "@/lib/utils";
 
 interface TokenInfo {
   mint: string;
@@ -31,6 +30,8 @@ export function TokenTable() {
   const { tokens: walletTokens, loading: tokensLoading, refetch } = useWalletTokens();
   const [amounts, setAmounts] = useState<Record<string, string>>({});
   const [processing, setProcessing] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [successMsg, setSuccessMsg] = useState<string | null>(null);
   
   const program = useLitterboxProgram();
   const { config, currentCycle, refetch: refetchState } = useProgramState();
@@ -58,16 +59,21 @@ export function TokenTable() {
     const amountNum = parseFloat(inputAmount);
     
     if (!amountNum || amountNum <= 0) {
-      notify({ type: "error", message: "Enter a valid amount" });
+      setError("Enter a valid amount");
+      setTimeout(() => setError(null), 5000);
       return;
     }
     
     if (amountNum > token.uiAmount) {
-      notify({ type: "error", message: "Amount exceeds balance" });
+      setError("Amount exceeds balance");
+      setTimeout(() => setError(null), 5000);
       return;
     }
 
     setProcessing(token.mint);
+    setError(null);
+    setSuccessMsg(null);
+    
     try {
       const amountLamports = new BN(amountNum * 10 ** token.decimals);
       const mint = new PublicKey(token.mint);
@@ -83,7 +89,7 @@ export function TokenTable() {
       const userAta = await getAssociatedTokenAddress(mint, publicKey);
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      await (program.methods as any)
+      const sig = await (program.methods as any)
         .deposit(amountLamports)
         .accounts({
           config: configPda,
@@ -99,19 +105,19 @@ export function TokenTable() {
         })
         .rpc();
       
-      notify({ 
-        type: "success", 
-        message: `Successfully contributed ${amountNum} ${token.symbol}!` 
-      });
+      setSuccessMsg(`Successfully contributed ${amountNum} ${token.symbol}!`);
       
       // Reset amount after success
       setAmounts((prev) => ({ ...prev, [token.mint]: "" }));
+      
+      // Clear success message after 5 seconds
+      setTimeout(() => setSuccessMsg(null), 5000);
       
       // Refresh balances
       await refetch();
       await refetchState();
     } catch (err: any) {
-      notify({ type: "error", message: err?.message || "Deposit failed" });
+      setError(err?.message || "Deposit failed");
     } finally {
       setProcessing(null);
     }
@@ -144,6 +150,25 @@ export function TokenTable() {
   }
 
   return (
+    <div className="space-y-4">
+      {/* Error message */}
+      {error && (
+        <Card className="border-red-900/30 bg-red-950/10">
+          <CardContent className="py-3 flex items-center gap-2">
+            <span className="text-xs text-red-400 font-mono">{error}</span>
+          </CardContent>
+        </Card>
+      )}
+      
+      {/* Success message */}
+      {successMsg && (
+        <Card className="border-green-900/30 bg-green-950/10">
+          <CardContent className="py-3 flex items-center gap-2">
+            <span className="text-xs text-green-400 font-mono">{successMsg}</span>
+          </CardContent>
+        </Card>
+      )}
+    
     <div className="overflow-x-auto">
       <table className="w-full table-auto">
         <thead>
@@ -221,6 +246,7 @@ export function TokenTable() {
           ))}
         </tbody>
       </table>
+    </div>
     </div>
   );
 }
