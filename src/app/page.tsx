@@ -6,7 +6,7 @@ import { useWallet } from "@solana/wallet-adapter-react";
 import { Navbar } from "@/components/ui/Navbar";
 import { ConnectPrompt } from "@/components/wallet/ConnectPrompt";
 import { CycleCard } from "@/components/cycles/CycleCard";
-import { DustScanner } from "@/components/deposit/DustScanner";
+import { TokenTable } from "@/components/deposit/TokenTable";
 import { ClaimPanel } from "@/components/claim/ClaimPanel";
 import { AdminPanel } from "@/components/admin/AdminPanel";
 import { useProgramState } from "@/hooks/useProgramState";
@@ -18,7 +18,7 @@ import { PROGRAM_ID } from "@/lib/constants";
 
 const VIEW_LABELS: Record<AppView, { title: string; subtitle: string }> = {
   dashboard: { title: "Overview",      subtitle: "Current cycle status and on-chain state"      },
-  deposit:   { title: "Deposit Dust",  subtitle: "Scan your wallet and sweep low-value tokens"  },
+  deposit:   { title: "Deposit Dust",  subtitle: "Throw any tokens into the LitterBox – dust or diamonds"  },
   claim:     { title: "Claim $LITTER", subtitle: "Collect your share from completed cycles"      },
   admin:     { title: "Admin",         subtitle: "Authority-only controls"                       },
 };
@@ -119,7 +119,7 @@ export default function Home() {
 
             {/* DEPOSIT */}
             {view === "deposit" && (
-              !publicKey ? <ConnectPrompt /> : <DustScanner />
+              !publicKey ? <ConnectPrompt /> : <TokenTable />
             )}
 
             {/* CLAIM */}
