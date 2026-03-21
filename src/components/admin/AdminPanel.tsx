@@ -132,7 +132,7 @@ export function AdminPanel() {
         <span className="text-xs font-mono text-[var(--text-muted)]">
           Authority: {formatAddress(publicKey!.toBase58())}
         </span>
-        <Badge variant="gold" className="ml-auto">Admin</Badge>
+        <Badge variant="sheesh" className="ml-auto">Admin</Badge>
       </div>
 
       {/* Program state */}

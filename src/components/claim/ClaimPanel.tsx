@@ -200,7 +200,7 @@ export function ClaimPanel() {
                           {formatLitter(cycle.estimatedLitter)}
                         </p>
                       </div>
-                      <Badge variant="gold"><Gift className="w-3 h-3" />Claimable</Badge>
+                      <Badge variant="sheesh"><Gift className="w-3 h-3" />Claimable</Badge>
                     </div>
                     <div className="grid grid-cols-2 gap-3 text-xs font-mono">
                       <div>

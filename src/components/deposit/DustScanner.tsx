@@ -144,7 +144,7 @@ export function DustScanner() {
           <span className="text-sm text-[var(--text-secondary)]">
             {dustTokens.length} dust token{dustTokens.length !== 1 ? "s" : ""} found
           </span>
-          <Badge variant="gold">{formatUsd(totalSelectedValue(dustTokens))} total</Badge>
+          <Badge variant="sheesh">{formatUsd(totalSelectedValue(dustTokens))} total</Badge>
         </div>
         <Button variant="ghost" size="sm" onClick={selectAll}>Select all</Button>
       </div>
