@@ -139,7 +139,7 @@ export default function Home() {
       {/* Footer - centered */}
       <footer className="mt-16 border-t border-[var(--border-subtle)] py-6">
         <div className="max-w-2xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[var(--text-muted)] font-mono">
-          <span>🐱 SHEESH · Solana Devnet</span>
+          <span>🐱 LitterBox · Solana Devnet</span>
           <a
             href={`https://explorer.solana.com/address/${PROGRAM_ID.toBase58()}?cluster=devnet`}
             target="_blank"

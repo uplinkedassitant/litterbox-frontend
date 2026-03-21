@@ -42,7 +42,7 @@ export function Navbar({ view, onViewChange }: NavbarProps) {
         <div className="flex items-center gap-3 shrink-0">
           <span className="text-2xl">🐱</span>
           <span className="font-display text-xl font-bold text-[var(--text-primary)] tracking-tight">
-            SHEESH
+            LitterBox
           </span>
           <Badge variant="muted" className="text-[10px] hidden sm:inline-flex">devnet</Badge>
         </div>
