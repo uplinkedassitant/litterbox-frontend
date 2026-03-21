@@ -159,7 +159,7 @@ function StatCard({
 }: {
   label: string;
   value: string;
-  badge?: "green" | "gold" | "muted";
+  badge?: "sheesh" | "green" | "muted";
 }) {
   return (
     <Card className="p-4 text-center">
