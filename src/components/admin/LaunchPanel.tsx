@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useLitterboxProgram } from "@/hooks/useLitterboxProgram";
 import { useProgramState } from "@/hooks/useProgramState";
