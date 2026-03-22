@@ -29,20 +29,20 @@ export function CycleCard({ cycle, config, userContribution }: CycleCardProps) {
       transition={{ duration: 0.4 }}
     >
       <Card variant="elevated" className="overflow-hidden">
-        {/* Claw scratch divider */}
-        <div className="h-1 w-full bg-gradient-to-r from-transparent via-litter-brown to-transparent opacity-50" />
+        {/* Divider */}
+        <div className="h-1 w-full bg-gradient-to-r from-transparent via-litter-muted to-transparent opacity-50" />
         
         <CardContent className="pt-5 space-y-5">
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
             <div>
               <div className="flex items-center gap-2 mb-1">
-                <Activity className="w-3.5 h-3.5 text-litter-brown" />
-                <span className="font-mono text-xs text-litter-brown uppercase tracking-widest">
+                <Activity className="w-3.5 h-3.5 text-litter-muted" />
+                <span className="font-mono text-xs text-litter-muted uppercase tracking-widest">
                   Active Cycle
                 </span>
               </div>
-              <p className="font-heading text-3xl text-litter-text font-bold">#{cycleId}</p>
+              <p className="font-heading text-3xl text-white">#{cycleId}</p>
             </div>
             <Badge variant={isReady ? "green" : "sheesh"}>
               {isReady ? "Ready for buyback" : "Accumulating"}
@@ -63,7 +63,7 @@ export function CycleCard({ cycle, config, userContribution }: CycleCardProps) {
           </div>
 
           {/* Footer */}
-          <div className="flex items-center gap-1.5 pt-1 text-xs text-litter-brown font-mono">
+          <div className="flex items-center gap-1.5 pt-1 text-xs text-litter-muted font-mono">
             <Clock className="w-3 h-3" />
             <span>Started {timeAgo(startTs)}</span>
           </div>
@@ -76,8 +76,8 @@ export function CycleCard({ cycle, config, userContribution }: CycleCardProps) {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="space-y-0.5 text-center sm:text-left">
-      <p className="text-[10px] uppercase tracking-widest text-litter-brown font-mono">{label}</p>
-      <p className="text-base text-litter-text font-mono">{value}</p>
+      <p className="text-[10px] uppercase tracking-widest text-litter-muted font-mono">{label}</p>
+      <p className="text-base text-white font-mono">{value}</p>
     </div>
   );
 }

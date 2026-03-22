@@ -42,18 +42,18 @@ export default function Home() {
           transition={{ duration: 0.25 }}
           className="mb-6 md:mb-8 text-center"
         >
-          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-litter-text">
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-white">
             {VIEW_LABELS[view].title}
           </h1>
-          <p className="text-litter-brown text-base md:text-lg mt-2 font-medium px-4">
+          <p className="text-litter-muted text-base md:text-lg mt-2 font-medium px-4">
             {VIEW_LABELS[view].subtitle}
           </p>
         </motion.div>
 
         {/* Loading / error banners */}
         {loading && (
-          <div className="flex items-center justify-center gap-2 text-litter-brown text-sm font-mono mb-6">
-            <Loader2 className="w-3.5 h-3.5 animate-spin text-litter-brown" />
+          <div className="flex items-center justify-center gap-2 text-litter-muted text-sm font-mono mb-6">
+            <Loader2 className="w-3.5 h-3.5 animate-spin text-litter-muted" />
             Hold tight while we dig through your wallet's litter...
           </div>
         )}
@@ -100,9 +100,9 @@ export default function Home() {
                 {config && currentCycle ? (
                   <CycleCard cycle={currentCycle} config={config} />
                 ) : !loading && (
-                  <Card className="card-grain bg-litter-card/80 border border-litter-brown/30">
+                  <Card className="card-grain bg-litter-card/80 border border-litter-muted/30">
                     <CardContent className="py-10 md:py-12 text-center px-4">
-                      <p className="text-litter-brown font-mono text-sm md:text-base">
+                      <p className="text-litter-muted font-mono text-sm md:text-base">
                         Program not yet initialized on devnet.
                       </p>
                     </CardContent>
@@ -132,14 +132,14 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-12 md:mt-16 border-t-2 border-litter-brown/50 py-4 md:py-6">
-        <div className="max-w-2xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs md:text-sm text-litter-brown font-mono">
+      <footer className="mt-12 md:mt-16 border-t-2 border-litter-muted/50 py-4 md:py-6">
+        <div className="max-w-2xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs md:text-sm text-litter-muted font-mono">
           <span>🐱 LitterBox · Solana Devnet</span>
           <a
             href={`https://explorer.solana.com/address/${PROGRAM_ID.toBase58()}?cluster=devnet`}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-litter-text transition-colors"
+            className="hover:text-white transition-colors"
           >
             {PROGRAM_ID.toBase58().slice(0, 8)}...↗
           </a>
@@ -157,14 +157,14 @@ function StatCard({
   badge?: "sheesh" | "green" | "red" | "muted";
 }) {
   return (
-    <Card className="card-grain bg-litter-card/80 border border-litter-brown/30 p-4 text-center">
-      <p className="text-[10px] uppercase tracking-widest text-litter-brown font-mono mb-2">
+    <Card className="card-grain bg-litter-card/80 border border-litter-muted/30 p-4 text-center">
+      <p className="text-[10px] uppercase tracking-widest text-litter-muted font-mono mb-2">
         {label}
       </p>
       {badge ? (
         <Badge variant={badge}>{value}</Badge>
       ) : (
-        <p className="text-xl font-heading text-litter-text">{value}</p>
+        <p className="text-xl font-heading text-white">{value}</p>
       )}
     </Card>
   );

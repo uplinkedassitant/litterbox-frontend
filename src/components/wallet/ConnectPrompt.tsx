@@ -12,10 +12,10 @@ export function ConnectPrompt() {
       className="flex flex-col items-center justify-center gap-6 py-16"
     >
       <div className="text-center space-y-3">
-        <h2 className="font-heading text-4xl text-litter-text font-bold">
+        <h2 className="font-heading text-4xl text-white">
           Connect Wallet
         </h2>
-        <p className="text-litter-brown text-lg max-w-md mx-auto leading-relaxed">
+        <p className="text-litter-muted text-lg max-w-md mx-auto leading-relaxed">
           Sweep Your Dust — or Tell It to Fuck Off 🖕
         </p>
       </div>

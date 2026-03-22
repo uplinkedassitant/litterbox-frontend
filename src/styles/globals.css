@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=DM+Sans:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=DM+Sans:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-heading: 'Permanent Marker', cursive;
+  --font-heading: 'Agbalumo', cursive;
   --font-body: 'DM Sans', sans-serif;
 }
 
@@ -22,7 +22,7 @@ body {
     radial-gradient(circle at 60% 30%, #252525 1px, transparent 2px);
   background-size: 80px 80px, 120px 120px, 100px 100px, 90px 90px;
   background-blend-mode: multiply;
-  color: #e5ded3;
+  color: #ffffff;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -58,14 +58,14 @@ body {
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
 ::-webkit-scrollbar-track { background: #0f0f0f; }
-::-webkit-scrollbar-thumb { background: #8B7355; border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: #666666; border-radius: 3px; }
 
 /* Wallet adapter overrides */
 .wallet-adapter-button {
   font-family: var(--font-body) !important;
-  background: #e5ded3 !important;
+  background: #ffffff !important;
   color: #0f0f0f !important;
-  border: 2px solid #e5ded3 !important;
+  border: 2px solid #ffffff !important;
   border-radius: 8px !important;
   font-size: 14px !important;
   font-weight: 700 !important;
@@ -73,23 +73,28 @@ body {
 }
 .wallet-adapter-button:hover {
   transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(229,222,211,0.3) !important;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.3) !important;
 }
 .wallet-adapter-modal-wrapper {
   background: #1a1a1a !important;
-  border: 2px solid #8B7355 !important;
+  border: 2px solid #666666 !important;
   border-radius: 16px !important;
 }
 
 /* Focus states */
 input:focus, button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(139,115,85,0.3);
+  box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
 }
 
 /* Claw scratch divider */
 .claw-divider {
   height: 2px;
-  background: linear-gradient(to right, transparent, #8B7355, transparent);
+  background: linear-gradient(to right, transparent, #666666, transparent);
   opacity: 0.5;
+}
+
+/* All text white */
+h1, h2, h3, h4, h5, h6, p, span, div, a, li, td, th, label {
+  color: #ffffff !important;
 }
