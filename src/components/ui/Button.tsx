@@ -1,6 +1,5 @@
 import { cn } from "@/lib/utils";
 import { Loader2 } from "lucide-react";
-import { motion } from "framer-motion";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "ghost" | "danger";
@@ -12,12 +11,10 @@ export function Button({
   className, variant = "primary", size = "md", loading, disabled, children, ...props
 }: ButtonProps) {
   return (
-    <motion.button
+    <button
       disabled={disabled || loading}
-      whileHover={{ scale: 1.08 }}
-      whileTap={{ scale: 0.95 }}
       className={cn(
-        "inline-flex items-center justify-center gap-2 font-bold rounded-lg border-2 border-black transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed",
+        "inline-flex items-center justify-center gap-2 font-bold rounded-lg border-2 border-black transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 active:scale-95",
         variant === "primary"   && "bg-litter-yellow text-black hover:shadow-xl hover:shadow-litter-yellow/30",
         variant === "secondary" && "bg-transparent border-litter-yellow text-litter-yellow hover:bg-litter-yellow/10",
         variant === "ghost"     && "bg-transparent text-white hover:text-litter-yellow",
@@ -31,6 +28,6 @@ export function Button({
     >
       {loading && <Loader2 className="w-4 h-4 animate-spin" />}
       {children}
-    </motion.button>
+    </button>
   );
 }
