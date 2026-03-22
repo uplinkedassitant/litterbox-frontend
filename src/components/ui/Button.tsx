@@ -14,10 +14,10 @@ export function Button({
     <button
       disabled={disabled || loading}
       className={cn(
-        "inline-flex items-center justify-center gap-2 font-bold rounded-lg border-2 border-black transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 active:scale-95",
-        variant === "primary"   && "bg-litter-yellow text-black hover:shadow-xl hover:shadow-litter-yellow/30",
-        variant === "secondary" && "bg-transparent border-litter-yellow text-litter-yellow hover:bg-litter-yellow/10",
-        variant === "ghost"     && "bg-transparent text-white hover:text-litter-yellow",
+        "inline-flex items-center justify-center gap-2 font-bold rounded-lg transition-all duration-200 disabled:opacity-40 disabled:cursor-not-allowed hover:scale-105 active:scale-95",
+        variant === "primary"   && "bg-litter-text text-litter-bg hover:shadow-lg",
+        variant === "secondary" && "bg-transparent border-2 border-litter-text text-litter-text hover:bg-litter-text/10",
+        variant === "ghost"     && "bg-transparent text-litter-brown hover:text-litter-text",
         variant === "danger"   && "bg-red-600 text-white hover:bg-red-500 border-red-900",
         size === "sm" && "text-xs px-3 py-2 h-8",
         size === "md" && "text-sm px-4 py-3 h-10",

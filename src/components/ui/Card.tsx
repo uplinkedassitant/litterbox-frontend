@@ -9,9 +9,9 @@ export function Card({ className, variant = "default", ...props }: CardProps) {
     <div
       className={cn(
         "rounded-xl border transition-all",
-        variant === "default"  && "bg-black/40 backdrop-blur-md border-litter-yellow/30",
-        variant === "elevated" && "bg-black/60 backdrop-blur-md border-litter-yellow/50 shadow-xl",
-        variant === "bordered" && "bg-transparent border-litter-yellow/50",
+        variant === "default"  && "bg-white/60 backdrop-blur-sm border-litter-brown/30",
+        variant === "elevated" && "bg-white/80 backdrop-blur-sm border-litter-brown/50 shadow-lg",
+        variant === "bordered" && "bg-transparent border-litter-brown/50",
         className
       )}
       {...props}

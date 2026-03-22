@@ -33,9 +33,9 @@ export default function Home() {
       {/* Hero background with cat silhouette */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div 
-          className="absolute inset-0 bg-[url('/cat-middle-finger.jpg')] bg-center bg-no-repeat bg-contain opacity-10 mix-blend-overlay"
+          className="absolute inset-0 bg-[url('/cat-logo.jpg')] bg-center bg-no-repeat bg-contain opacity-5"
         />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-litter-yellow opacity-10 blur-[150px]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-litter-brown opacity-10 blur-[150px]" />
       </div>
 
       <Navbar view={view} onViewChange={setView} />
@@ -50,26 +50,26 @@ export default function Home() {
           transition={{ duration: 0.25 }}
           className="mb-8 text-center"
         >
-          <h1 className="font-heading text-5xl md:text-6xl text-litter-yellow drop-shadow-lg">
+          <h1 className="font-heading text-5xl md:text-6xl text-litter-text font-bold">
             {VIEW_LABELS[view].title}
           </h1>
-          <p className="text-white/80 text-lg mt-2">
+          <p className="text-litter-brown text-lg mt-2 font-medium">
             {VIEW_LABELS[view].subtitle}
           </p>
         </motion.div>
 
         {/* Loading / error banners */}
         {loading && (
-          <div className="flex items-center justify-center gap-2 text-white/70 text-sm font-mono mb-6">
-            <Loader2 className="w-3.5 h-3.5 animate-spin text-litter-yellow" />
+          <div className="flex items-center justify-center gap-2 text-litter-brown text-sm font-mono mb-6">
+            <Loader2 className="w-3.5 h-3.5 animate-spin text-litter-brown" />
             Hold tight while we dig through your wallet's litter...
           </div>
         )}
         {error && (
-          <Card className="mb-6 border-red-500 bg-red-900/30">
+          <Card className="mb-6 border-red-500 bg-red-50">
             <CardContent className="py-3 flex items-center justify-center gap-2">
-              <AlertCircle className="w-4 h-4 text-red-400 shrink-0" />
-              <p className="text-sm text-red-400 font-mono">😼💩 Shit... something broke in the litter.</p>
+              <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+              <p className="text-sm text-red-600 font-mono">😼💩 Shit... something broke in the litter.</p>
             </CardContent>
           </Card>
         )}
@@ -108,9 +108,9 @@ export default function Home() {
                 {config && currentCycle ? (
                   <CycleCard cycle={currentCycle} config={config} />
                 ) : !loading && (
-                  <Card className="card-grain bg-black/40 backdrop-blur-md border border-litter-yellow/30">
+                  <Card className="card-grain bg-white/60 backdrop-blur-sm border border-litter-brown/30">
                     <CardContent className="py-12 text-center">
-                      <p className="text-white/70 font-mono">
+                      <p className="text-litter-brown font-mono">
                         Program not yet initialized on devnet.
                       </p>
                     </CardContent>
@@ -140,14 +140,14 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 border-t-2 border-litter-yellow/50 py-6">
-        <div className="max-w-2xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-white/60 font-mono">
+      <footer className="mt-16 border-t-2 border-litter-brown/50 py-6">
+        <div className="max-w-2xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-litter-brown font-mono">
           <span>🐱 LitterBox · Solana Devnet</span>
           <a
             href={`https://explorer.solana.com/address/${PROGRAM_ID.toBase58()}?cluster=devnet`}
             target="_blank"
             rel="noopener noreferrer"
-            className="hover:text-litter-yellow transition-colors"
+            className="hover:text-litter-text transition-colors"
           >
             {PROGRAM_ID.toBase58().slice(0, 8)}...↗
           </a>
@@ -165,14 +165,14 @@ function StatCard({
   badge?: "sheesh" | "green" | "red" | "muted";
 }) {
   return (
-    <Card className="card-grain bg-black/40 backdrop-blur-md border border-litter-yellow/30 p-4 text-center">
-      <p className="text-[10px] uppercase tracking-widest text-white/50 font-mono mb-2">
+    <Card className="card-grain bg-white/60 backdrop-blur-sm border border-litter-brown/30 p-4 text-center">
+      <p className="text-[10px] uppercase tracking-widest text-litter-brown font-mono mb-2">
         {label}
       </p>
       {badge ? (
         <Badge variant={badge}>{value}</Badge>
       ) : (
-        <p className="text-xl font-heading text-litter-yellow">{value}</p>
+        <p className="text-xl font-heading font-bold text-litter-text">{value}</p>
       )}
     </Card>
   );

@@ -12,27 +12,27 @@ export function ConnectPrompt() {
       className="flex flex-col items-center justify-center gap-6 py-16"
     >
       <div className="text-center space-y-3">
-        {/* Large cat middle finger as hero */}
+        {/* Large cat logo as hero */}
         <div className="relative mb-6">
           <img 
-            src="/cat-middle-finger.jpg" 
+            src="/cat-logo.jpg" 
             alt="LitterBox" 
-            className="w-40 h-40 mx-auto object-contain opacity-80"
+            className="w-40 h-40 mx-auto object-contain"
           />
-          <div className="absolute inset-0 bg-litter-yellow opacity-20 blur-3xl rounded-full" />
+          <div className="absolute inset-0 bg-litter-brown opacity-10 blur-3xl rounded-full" />
         </div>
         
-        <h2 className="font-heading text-4xl text-litter-yellow drop-shadow-lg">
+        <h2 className="font-heading text-4xl text-litter-text font-bold">
           Connect Wallet
         </h2>
-        <p className="text-white/80 text-lg max-w-md mx-auto leading-relaxed">
+        <p className="text-litter-brown text-lg max-w-md mx-auto leading-relaxed">
           Sweep Your Dust — or Tell It to Fuck Off 🖕
         </p>
       </div>
       
       <motion.div
-        whileHover={{ scale: 1.1, rotate: 5 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.98 }}
         className="mt-4"
       >
         <WalletMultiButton />
