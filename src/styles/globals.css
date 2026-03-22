@@ -1,36 +1,12 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Inter:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-display: 'Space Grotesk', sans-serif;
-  --font-body: 'Outfit', sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-
-  /* SHEESH brand colors - dark with electric yellow */
-  --bg-primary:   #0a0a0a;
-  --bg-secondary: #111111;
-  --bg-card:      #161616;
-  --bg-elevated:  #1c1c1c;
-
-  --border-subtle:  rgba(255, 220, 50, 0.08);
-  --border-default: rgba(255, 220, 50, 0.15);
-  --border-strong:  rgba(255, 220, 50, 0.35);
-
-  --text-primary:   #ffffff;
-  --text-secondary: #a0a0a0;
-  --text-muted:     #555555;
-
-  /* SHEESH yellow - electric amber */
-  --sheesh:        #ffdc00;
-  --sheesh-light:  #ffe566;
-  --sheesh-dim:    #b89c00;
-  --sheesh-glow:   rgba(255, 220, 0, 0.4);
-
-  --positive: #22c55e;
-  --negative: #ef4444;
+  --font-heading: 'Bangers', cursive;
+  --font-body: 'Inter', sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -38,82 +14,88 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  background: linear-gradient(to bottom, #4A90E2, #1E3A8A);
+  color: white;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Subtle grid background */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(255,220,50,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,220,50,0.02) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-  z-index: -1;
+/* Grain overlay */
+.grain-bg {
+  position: relative;
 }
 
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background: var(--sheesh-dim); border-radius: 2px; }
+.grain-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)' opacity='0.08'/%3E%3C/svg%3E");
+  opacity: 0.12;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 9999;
+}
+
+/* Dust particles */
+.dust-bg {
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.1) 1px, transparent 1px),
+    radial-gradient(circle at 80% 70%, rgba(255,255,255,0.08) 1px, transparent 1px),
+    radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05) 1px, transparent 1px);
+  background-size: 100px 100px, 150px 150px, 200px 200px;
+}
+
+/* Card grain effect */
+.card-grain {
+  position: relative;
+}
+
+.card-grain::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+  opacity: 0.5;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #1E3A8A; }
+::-webkit-scrollbar-thumb { background: #FFD700; border-radius: 3px; }
 
 /* Wallet adapter overrides */
 .wallet-adapter-button {
   font-family: var(--font-body) !important;
-  background: transparent !important;
-  border: 1px solid var(--border-default) !important;
-  color: var(--text-primary) !important;
+  background: #FFD700 !important;
+  color: #000000 !important;
+  border: 2px solid #000000 !important;
   border-radius: 8px !important;
-  font-size: 13px !important;
-  font-weight: 500 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
   transition: all 0.2s !important;
-  padding: 8px 16px !important;
 }
 .wallet-adapter-button:hover {
-  border-color: var(--sheesh) !important;
-  background: rgba(255, 220, 0, 0.08) !important;
-  box-shadow: 0 0 20px var(--sheesh-glow) !important;
+  transform: scale(1.05) rotate(6deg);
+  box-shadow: 0 0 20px rgba(255,215,0,0.5) !important;
 }
 .wallet-adapter-modal-wrapper {
-  background: var(--bg-card) !important;
-  border: 1px solid var(--border-default) !important;
+  background: #1E3A8A !important;
+  border: 2px solid #FFD700 !important;
   border-radius: 16px !important;
 }
 
 /* Focus states */
 input:focus, button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--sheesh-glow);
+  box-shadow: 0 0 0 3px rgba(255,215,0,0.5);
 }
 
-/* Utility classes */
-.sheen-border {
-  border: 1px solid var(--border-default);
-}
-
-.sheen-glow {
-  box-shadow: 0 0 30px var(--sheesh-glow);
-}
-
-.text-sheesh {
-  color: var(--sheesh);
-}
-
-.bg-sheesh {
-  background-color: var(--sheesh);
-}
-
-/* Animation */
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px var(--sheesh-glow); }
-  50% { box-shadow: 0 0 40px var(--sheesh-glow); }
-}
-
-.animate-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+/* Claw scratch divider */
+.claw-divider {
+  height: 2px;
+  background: linear-gradient(to right, transparent, #FFD700, transparent);
+  opacity: 0.5;
 }

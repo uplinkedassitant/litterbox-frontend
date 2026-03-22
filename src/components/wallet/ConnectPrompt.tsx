@@ -12,15 +12,31 @@ export function ConnectPrompt() {
       className="flex flex-col items-center justify-center gap-6 py-16"
     >
       <div className="text-center space-y-3">
-        <div className="text-6xl mb-2">🐱</div>
-        <h2 className="font-display text-2xl font-bold text-[var(--text-primary)]">
+        {/* Large cat middle finger as hero */}
+        <div className="relative mb-6">
+          <img 
+            src="/cat-middle-finger.jpg" 
+            alt="LitterBox" 
+            className="w-40 h-40 mx-auto object-contain opacity-80"
+          />
+          <div className="absolute inset-0 bg-litter-yellow opacity-20 blur-3xl rounded-full" />
+        </div>
+        
+        <h2 className="font-heading text-4xl text-litter-yellow drop-shadow-lg">
           Connect Wallet
         </h2>
-        <p className="text-[var(--text-secondary)] text-sm max-w-xs mx-auto leading-relaxed">
-          Connect your wallet to scan for dust tokens and start converting them into $LITTER.
+        <p className="text-white/80 text-lg max-w-md mx-auto leading-relaxed">
+          Sweep Your Dust — or Tell It to Fuck Off 🖕
         </p>
       </div>
-      <WalletMultiButton />
+      
+      <motion.div
+        whileHover={{ scale: 1.1, rotate: 5 }}
+        whileTap={{ scale: 0.95 }}
+        className="mt-4"
+      >
+        <WalletMultiButton />
+      </motion.div>
     </motion.div>
   );
 }

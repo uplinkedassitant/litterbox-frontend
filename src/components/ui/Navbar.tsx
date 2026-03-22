@@ -36,53 +36,54 @@ export function Navbar({ view, onViewChange }: NavbarProps) {
   );
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[var(--border-subtle)] bg-[rgba(10,10,10,0.9)] backdrop-blur-md">
-      <div className="max-w-4xl mx-auto px-4 h-16 flex items-center justify-between gap-4">
-        {/* Logo - centered on mobile */}
+    <header className="sticky top-0 z-50 w-full bg-black/80 backdrop-blur-md border-b-2 border-litter-yellow">
+      <div className="max-w-4xl mx-auto px-4 h-20 flex items-center justify-between gap-4">
+        {/* Logo */}
         <div className="flex items-center gap-3 shrink-0">
-          <span className="text-2xl">🐱</span>
-          <span className="font-display text-xl font-bold text-[var(--text-primary)] tracking-tight">
-            LitterBox
-          </span>
-          <Badge variant="muted" className="text-[10px] hidden sm:inline-flex">devnet</Badge>
+          <img 
+            src="/cat-middle-finger.jpg" 
+            alt="LitterBox Logo" 
+            className="h-12 w-12 object-contain rounded-lg"
+          />
+          <div>
+            <span className="text-3xl font-heading text-litter-yellow tracking-wide">
+              LitterBox
+            </span>
+            <p className="text-litter-yellow/80 text-xs italic -mt-1">
+              Sweep Your Dust... or Flip It Off
+            </p>
+          </div>
         </div>
 
-        {/* Desktop Nav - centered */}
-        <nav className="hidden md:flex items-center gap-1 absolute left-1/2 -translate-x-1/2">
+        {/* Desktop Nav */}
+        <nav className="hidden md:flex items-center gap-1">
           {filteredNavItems.map((item) => (
             <button
               key={item.id}
               onClick={() => onViewChange(item.id)}
               className={cn(
-                "relative px-4 py-2 text-sm font-medium rounded-lg transition-all",
+                "relative px-4 py-2 text-sm font-bold transition-all hover:scale-105",
                 view === item.id
-                  ? "text-[var(--sheesh)]"
-                  : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
+                  ? "text-litter-yellow underline underline-offset-4 decoration-4 decoration-litter-yellow"
+                  : "text-white hover:text-litter-yellow"
               )}
             >
-              {view === item.id && (
-                <motion.span
-                  layoutId="nav-active"
-                  className="absolute inset-0 rounded-lg bg-[rgba(255,220,0,0.1)] border border-[var(--sheesh-dim)]"
-                  transition={{ type: "spring", stiffness: 380, damping: 36 }}
-                />
-              )}
-              <span className="relative z-10">{item.label}</span>
+              {item.label}
             </button>
           ))}
         </nav>
 
-        {/* Wallet - right side */}
+        {/* Wallet */}
         <div className="shrink-0">
           <WalletMultiButton />
         </div>
 
         {/* Mobile menu button */}
         <button 
-          className="md:hidden p-2 text-[var(--text-secondary)]"
+          className="md:hidden p-2 text-litter-yellow"
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>
 
@@ -92,7 +93,7 @@ export function Navbar({ view, onViewChange }: NavbarProps) {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
-          className="md:hidden border-t border-[var(--border-subtle)] bg-[var(--bg-secondary)]"
+          className="md:hidden bg-black border-t-2 border-litter-yellow"
         >
           <nav className="flex flex-col p-4 gap-2">
             {filteredNavItems.map((item) => (
@@ -103,10 +104,10 @@ export function Navbar({ view, onViewChange }: NavbarProps) {
                   setMobileMenuOpen(false);
                 }}
                 className={cn(
-                  "w-full text-left px-4 py-3 text-sm font-medium rounded-lg transition-all",
+                  "w-full text-left px-4 py-3 text-lg font-bold rounded-lg transition-all",
                   view === item.id
-                    ? "text-[var(--sheesh)] bg-[rgba(255,220,0,0.1)]"
-                    : "text-[var(--text-muted)]"
+                    ? "text-litter-yellow bg-litter-yellow/10"
+                    : "text-white hover:text-litter-yellow"
                 )}
               >
                 {item.label}
