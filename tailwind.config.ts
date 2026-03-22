@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        heading: ['Agbalumo', 'cursive'],
+        heading: ['Orbitron', 'sans-serif'],
         body: ['DM Sans', 'sans-serif'],
       },
       colors: {
