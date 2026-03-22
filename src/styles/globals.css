@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=DM+Sans:wght@400;500;700&display=swap');
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
-  --font-heading: 'Syne', sans-serif;
+  --font-heading: 'Permanent Marker', cursive;
   --font-body: 'DM Sans', sans-serif;
 }
 
@@ -14,15 +14,15 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
-  background-color: #e5ded3;
+  background-color: #0f0f0f;
   background-image:
-    radial-gradient(circle at 15% 25%, #d8d0c5 1px, transparent 2px),
-    radial-gradient(circle at 85% 70%, #d2ccc2 1px, transparent 2px),
-    radial-gradient(circle at 40% 80%, #cbbfb0 1px, transparent 1.5px),
-    radial-gradient(circle at 60% 30%, #d4c9bd 1px, transparent 2px);
+    radial-gradient(circle at 15% 25%, #2a2a2a 1px, transparent 2px),
+    radial-gradient(circle at 85% 70%, #222222 1px, transparent 2px),
+    radial-gradient(circle at 40% 80%, #1a1a1a 1px, transparent 1.5px),
+    radial-gradient(circle at 60% 30%, #252525 1px, transparent 2px);
   background-size: 80px 80px, 120px 120px, 100px 100px, 90px 90px;
   background-blend-mode: multiply;
-  color: #1a1a1a;
+  color: #e5ded3;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
@@ -33,8 +33,8 @@ body {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)' opacity='0.04'/%3E%3C/svg%3E");
-  opacity: 0.5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)' opacity='0.06'/%3E%3C/svg%3E");
+  opacity: 0.6;
   pointer-events: none;
   mix-blend-mode: overlay;
   z-index: 9999;
@@ -49,7 +49,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
   opacity: 0.5;
   pointer-events: none;
   border-radius: inherit;
@@ -57,15 +57,15 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #e5ded3; }
+::-webkit-scrollbar-track { background: #0f0f0f; }
 ::-webkit-scrollbar-thumb { background: #8B7355; border-radius: 3px; }
 
 /* Wallet adapter overrides */
 .wallet-adapter-button {
   font-family: var(--font-body) !important;
-  background: #1a1a1a !important;
-  color: #e5ded3 !important;
-  border: 2px solid #1a1a1a !important;
+  background: #e5ded3 !important;
+  color: #0f0f0f !important;
+  border: 2px solid #e5ded3 !important;
   border-radius: 8px !important;
   font-size: 14px !important;
   font-weight: 700 !important;
@@ -73,18 +73,18 @@ body {
 }
 .wallet-adapter-button:hover {
   transform: scale(1.02);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
+  box-shadow: 0 4px 12px rgba(229,222,211,0.3) !important;
 }
 .wallet-adapter-modal-wrapper {
-  background: #e5ded3 !important;
-  border: 2px solid #1a1a1a !important;
+  background: #1a1a1a !important;
+  border: 2px solid #8B7355 !important;
   border-radius: 16px !important;
 }
 
 /* Focus states */
 input:focus, button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(26,26,26,0.2);
+  box-shadow: 0 0 0 3px rgba(139,115,85,0.3);
 }
 
 /* Claw scratch divider */

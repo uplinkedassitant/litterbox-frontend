@@ -46,7 +46,7 @@ export function Navbar({ view, onViewChange }: NavbarProps) {
             className="h-14 w-14 object-contain rounded-lg"
           />
           <div>
-            <span className="text-2xl font-heading font-bold text-litter-text tracking-wide">
+            <span className="text-2xl font-heading text-litter-text tracking-wide">
               LitterBox
             </span>
             <p className="text-litter-brown text-xs font-medium -mt-0.5">
@@ -93,7 +93,7 @@ export function Navbar({ view, onViewChange }: NavbarProps) {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-litter-bg border-t-2 border-litter-brown"
+          className="md:hidden bg-litter-card border-t-2 border-litter-brown"
         >
           <nav className="flex flex-col p-4 gap-2">
             {filteredNavItems.map((item) => (

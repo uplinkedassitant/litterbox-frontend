@@ -9,15 +9,14 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        heading: ['Syne', 'sans-serif'],
+        heading: ['Permanent Marker', 'cursive'],
         body: ['DM Sans', 'sans-serif'],
       },
       colors: {
-        'litter-bg': '#e5ded3',
-        'litter-light': '#F5F2EB',
-        'litter-dark': '#D4CFC2',
+        'litter-bg': '#0f0f0f',
+        'litter-card': '#1a1a1a',
         'litter-brown': '#8B7355',
-        'litter-text': '#1a1a1a',
+        'litter-text': '#e5ded3',
       },
     },
   },
