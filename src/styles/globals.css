@@ -14,36 +14,30 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
-  background: linear-gradient(135deg, #E8E4D9 0%, #D4CFC2 50%, #C9C4B8 100%);
+  background-color: #e5ded3;
+  background-image:
+    radial-gradient(circle at 15% 25%, #d8d0c5 1px, transparent 2px),
+    radial-gradient(circle at 85% 70%, #d2ccc2 1px, transparent 2px),
+    radial-gradient(circle at 40% 80%, #cbbfb0 1px, transparent 1.5px),
+    radial-gradient(circle at 60% 30%, #d4c9bd 1px, transparent 2px);
+  background-size: 80px 80px, 120px 120px, 100px 100px, 90px 90px;
+  background-blend-mode: multiply;
   color: #1a1a1a;
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Grain overlay */
-.grain-bg {
-  position: relative;
-}
-
+/* Grain overlay - subtle */
 .grain-bg::before {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)' opacity='0.06'/%3E%3C/svg%3E");
-  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 600 600'%3E%3Cfilter id='a'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23a)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.5;
   pointer-events: none;
   mix-blend-mode: overlay;
   z-index: 9999;
-}
-
-/* Dust particles */
-.dust-bg {
-  background-image: 
-    radial-gradient(circle at 20% 30%, rgba(0,0,0,0.03) 1px, transparent 1px),
-    radial-gradient(circle at 80% 70%, rgba(0,0,0,0.02) 1px, transparent 1px),
-    radial-gradient(circle at 50% 50%, rgba(0,0,0,0.02) 1px, transparent 1px);
-  background-size: 100px 100px, 150px 150px, 200px 200px;
 }
 
 /* Card grain effect */
@@ -63,14 +57,14 @@ body {
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #D4CFC2; }
+::-webkit-scrollbar-track { background: #e5ded3; }
 ::-webkit-scrollbar-thumb { background: #8B7355; border-radius: 3px; }
 
 /* Wallet adapter overrides */
 .wallet-adapter-button {
   font-family: var(--font-body) !important;
   background: #1a1a1a !important;
-  color: #E8E4D9 !important;
+  color: #e5ded3 !important;
   border: 2px solid #1a1a1a !important;
   border-radius: 8px !important;
   font-size: 14px !important;
@@ -82,7 +76,7 @@ body {
   box-shadow: 0 4px 12px rgba(0,0,0,0.2) !important;
 }
 .wallet-adapter-modal-wrapper {
-  background: #E8E4D9 !important;
+  background: #e5ded3 !important;
   border: 2px solid #1a1a1a !important;
   border-radius: 16px !important;
 }
