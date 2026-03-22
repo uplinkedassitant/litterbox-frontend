@@ -29,31 +29,23 @@ export default function Home() {
   const { config, currentCycle, loading, error } = useProgramState();
 
   return (
-    <div className="grain-bg min-h-screen dust-bg">
-      {/* Hero background with cat silhouette */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div 
-          className="absolute inset-0 bg-[url('/cat-logo.jpg')] bg-center bg-no-repeat bg-contain opacity-5"
-        />
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-litter-brown opacity-10 blur-[150px]" />
-      </div>
-
+    <div className="grain-bg min-h-screen">
       <Navbar view={view} onViewChange={setView} />
 
-      {/* Main content */}
-      <main className="max-w-2xl mx-auto px-4 py-8 relative z-10">
+      {/* Main content - mobile friendly */}
+      <main className="max-w-2xl mx-auto px-4 py-6 md:py-8">
         {/* Page header */}
         <motion.div
           key={view + "-header"}
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.25 }}
-          className="mb-8 text-center"
+          className="mb-6 md:mb-8 text-center"
         >
-          <h1 className="font-heading text-5xl md:text-6xl text-litter-text font-bold">
+          <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl text-litter-text font-bold">
             {VIEW_LABELS[view].title}
           </h1>
-          <p className="text-litter-brown text-lg mt-2 font-medium">
+          <p className="text-litter-brown text-base md:text-lg mt-2 font-medium px-4">
             {VIEW_LABELS[view].subtitle}
           </p>
         </motion.div>
@@ -109,8 +101,8 @@ export default function Home() {
                   <CycleCard cycle={currentCycle} config={config} />
                 ) : !loading && (
                   <Card className="card-grain bg-white/60 backdrop-blur-sm border border-litter-brown/30">
-                    <CardContent className="py-12 text-center">
-                      <p className="text-litter-brown font-mono">
+                    <CardContent className="py-10 md:py-12 text-center px-4">
+                      <p className="text-litter-brown font-mono text-sm md:text-base">
                         Program not yet initialized on devnet.
                       </p>
                     </CardContent>
@@ -140,8 +132,8 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="mt-16 border-t-2 border-litter-brown/50 py-6">
-        <div className="max-w-2xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-sm text-litter-brown font-mono">
+      <footer className="mt-12 md:mt-16 border-t-2 border-litter-brown/50 py-4 md:py-6">
+        <div className="max-w-2xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs md:text-sm text-litter-brown font-mono">
           <span>🐱 LitterBox · Solana Devnet</span>
           <a
             href={`https://explorer.solana.com/address/${PROGRAM_ID.toBase58()}?cluster=devnet`}
