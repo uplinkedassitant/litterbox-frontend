@@ -9,11 +9,16 @@
   --font-body: 'DM Sans', sans-serif;
 }
 
-* { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+* { 
+  box-sizing: border-box; 
+}
+
+html { 
+  scroll-behavior: smooth; 
+}
 
 body {
-  font-family: var(--font-body);
+  font-family: 'DM Sans', sans-serif;
   background-color: #0f0f0f;
   background-image:
     radial-gradient(circle at 15% 25%, #2a2a2a 1px, transparent 2px),
@@ -26,6 +31,11 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+}
+
+/* Force Orbitron on headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif !important;
 }
 
 /* Grain overlay - subtle */
@@ -62,7 +72,7 @@ body {
 
 /* Wallet adapter overrides */
 .wallet-adapter-button {
-  font-family: var(--font-body) !important;
+  font-family: 'DM Sans', sans-serif !important;
   background: #ffffff !important;
   color: #0f0f0f !important;
   border: 2px solid #ffffff !important;
@@ -85,13 +95,6 @@ body {
 input:focus, button:focus {
   outline: none;
   box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
-}
-
-/* Claw scratch divider */
-.claw-divider {
-  height: 2px;
-  background: linear-gradient(to right, transparent, #666666, transparent);
-  opacity: 0.5;
 }
 
 /* All text white */
