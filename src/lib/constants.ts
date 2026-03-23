@@ -1,7 +1,8 @@
 import { PublicKey } from "@solana/web3.js";
 
 // ── Deployed program ──────────────────────────────────────────────────────────
-// Updated: 2026-03-23 - Fresh deployment with correct initialization
+// Updated: 2026-03-23 - Fresh deployment with correct initialization ✅
+// Program: 3X1zzNCdQUhuQDxqVCpyiGoJNcqYVMxEDW3YQBfoVcMe (Devnet)
 export const PROGRAM_ID = new PublicKey(
   "3X1zzNCdQUhuQDxqVCpyiGoJNcqYVMxEDW3YQBfoVcMe"
 );
