@@ -39,7 +39,7 @@ vercel
 | Variable | Value (Devnet) | Value (Mainnet) |
 |----------|---------------|-----------------|
 | `NEXT_PUBLIC_RPC_URL` | `https://devnet.helius-rpc.com/?api-key=d3bae4a8-b9a7-4ce2-9069-6224be9cd33c` | `https://api.mainnet-beta.solana.com` |
-| `NEXT_PUBLIC_PROGRAM_ID` | `GbDxASiScq4SNjq3Nj5iqYNSkCeyuTLTHSE64pxyAQeD` | `<mainnet-program-id>` |
+| `NEXT_PUBLIC_PROGRAM_ID` | `3X1zzNCdQUhuQDxqVCpyiGoJNcqYVMxEDW3YQBfoVcMe` | `<mainnet-program-id>` |
 | `NEXT_PUBLIC_NETWORK` | `devnet` | `mainnet-beta` |
 
 **How to Add:**

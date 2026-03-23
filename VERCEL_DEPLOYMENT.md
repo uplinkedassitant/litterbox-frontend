@@ -45,7 +45,7 @@ Set these in **Vercel Dashboard** → Project Settings → Environment Variables
 | Variable | Devnet Value | Mainnet Value | Description |
 |----------|-------------|---------------|-------------|
 | `NEXT_PUBLIC_RPC_URL` | `https://devnet.helius-rpc.com/?api-key=YOUR_KEY` | `https://api.mainnet-beta.solana.com` | Solana RPC endpoint |
-| `NEXT_PUBLIC_PROGRAM_ID` | `GbDxASiScq4SNjq3Nj5iqYNSkCeyuTLTHSE64pxyAQeD` | `<mainnet-program-id>` | LitterBox program ID |
+| `NEXT_PUBLIC_PROGRAM_ID` | `3X1zzNCdQUhuQDxqVCpyiGoJNcqYVMxEDW3YQBfoVcMe` | `<mainnet-program-id>` | LitterBox program ID |
 | `NEXT_PUBLIC_NETWORK` | `devnet` | `mainnet-beta` | Solana network |
 
 ### How to Add in Vercel:
