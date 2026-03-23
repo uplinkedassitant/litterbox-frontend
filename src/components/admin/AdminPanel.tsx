@@ -8,12 +8,8 @@ import { Card, CardContent, CardHeader } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { ProgressBar } from "@/components/ui/ProgressBar";
-import {
 import { LaunchPanel } from "./LaunchPanel";
-  getConfigPda,
-  getCyclePda,
-  getPlatformMintPda,
-} from "@/lib/pda";
+import { getConfigPda, getCyclePda, getPlatformMintPda } from "@/lib/pda";
 import { getAssociatedTokenAddress, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { SystemProgram } from "@solana/web3.js";
 import { BN } from "@coral-xyz/anchor";
@@ -22,20 +18,17 @@ import { BUYBACK_THRESHOLD_SOL, PROGRAM_ID, JUPITER_PROGRAM_ID } from "@/lib/con
 import { ShieldAlert, Zap, RotateCcw, Terminal, Rocket } from "lucide-react";
 
 export function AdminPanel() {
-  const { publicKey }  = useWallet();
-  const program        = useLitterboxProgram();
+  const { publicKey } = useWallet();
+  const program = useLitterboxProgram();
   const [launchLoading, setLaunchLoading] = useState(false);
   const { config, currentCycle, refetch } = useProgramState();
-
   const [buybackLoading, setBuybackLoading] = useState(false);
-  const [recordLoading,  setRecordLoading]  = useState(false);
-  const [litterInput,    setLitterInput]    = useState("");
-  const [error,          setError]          = useState<string | null>(null);
-  const [lastTx,         setLastTx]         = useState<string | null>(null);
+  const [recordLoading, setRecordLoading] = useState(false);
+  const [litterInput, setLitterInput] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [lastTx, setLastTx] = useState<string | null>(null);
 
-  const isAuthority =
-    config && publicKey &&
-    config.authority.toBase58() === publicKey.toBase58();
+  const isAuthority = config && publicKey && config.authority.toBase58() === publicKey.toBase58();
 
   if (!isAuthority) {
     return (
@@ -56,28 +49,27 @@ export function AdminPanel() {
     setBuybackLoading(true);
     setError(null);
     try {
-      const [configPda]    = getConfigPda();
+      const [configPda] = getConfigPda();
       const [platformMint] = getPlatformMintPda();
-      const cycleId        = config.currentCycle.toNumber();
-      const [cyclePda]     = getCyclePda(cycleId);
-      const airdropVault   = await getAssociatedTokenAddress(platformMint, configPda, true);
-
-      // IDL account names from litterbox.json
+      const cycleId = config.currentCycle.toNumber();
+      const [cyclePda] = getCyclePda(cycleId);
+      const airdropVault = await getAssociatedTokenAddress(platformMint, configPda, true);
+      
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const sig = await (program.methods as any)
         .buyback()
         .accounts({
-          config:            configPda,
-          currentCycle:      cyclePda,
+          config: configPda,
+          currentCycle: cyclePda,
           platformTokenMint: platformMint,
-          jupiterProgram:    JUPITER_PROGRAM_ID,
+          jupiterProgram: JUPITER_PROGRAM_ID,
           airdropVault,
-          authority:         publicKey,
-          tokenProgram:      TOKEN_PROGRAM_ID,
-          systemProgram:     SystemProgram.programId,
+          authority: publicKey,
+          tokenProgram: TOKEN_PROGRAM_ID,
+          systemProgram: SystemProgram.programId,
         })
         .rpc();
-
+      
       setLastTx(sig);
       await refetch();
     } catch (e: unknown) {
@@ -93,22 +85,21 @@ export function AdminPanel() {
     setError(null);
     try {
       const [configPda] = getConfigPda();
-      const cycleId     = config.currentCycle.toNumber();
-      const [cyclePda]  = getCyclePda(cycleId);
-      // Input is whole $LITTER tokens, convert to 6-decimal lamports
+      const cycleId = config.currentCycle.toNumber();
+      const [cyclePda] = getCyclePda(cycleId);
       const litterLamports = new BN(Math.floor(parseFloat(litterInput) * 1_000_000));
-
+      
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const sig = await (program.methods as any)
         .recordBuyback(new BN(cycleId), litterLamports)
         .accounts({
-          config:        configPda,
-          cycle:         cyclePda,
-          authority:     publicKey,
+          config: configPda,
+          cycle: cyclePda,
+          authority: publicKey,
           systemProgram: SystemProgram.programId,
         })
         .rpc();
-
+      
       setLastTx(sig);
       setLitterInput("");
       await refetch();
@@ -119,9 +110,9 @@ export function AdminPanel() {
     }
   }
 
-  const cycleId      = config.currentCycle.toNumber();
-  const solContrib   = currentCycle?.totalSolContributed.toNumber() ?? 0;
-  const progress     = cycleProgress(solContrib, BUYBACK_THRESHOLD_SOL);
+  const cycleId = config.currentCycle.toNumber();
+  const solContrib = currentCycle?.totalSolContributed.toNumber() ?? 0;
+  const progress = cycleProgress(solContrib, BUYBACK_THRESHOLD_SOL);
   const thresholdMet = progress >= 100;
 
   return (
@@ -139,23 +130,20 @@ export function AdminPanel() {
       <Card variant="elevated">
         <CardHeader>
           <p className="text-xs uppercase tracking-widest text-[var(--text-muted)] font-mono">
-        {!config?.launched && <LaunchPanel />}
+            {!config?.launched && <LaunchPanel />}
             Program state
           </p>
         </CardHeader>
         <CardContent className="pt-0 space-y-4">
           <div className="grid grid-cols-2 gap-4 text-xs font-mono">
-            <Stat label="Program ID"    value={formatAddress(PROGRAM_ID.toBase58())} />
-            <Stat label="Status"        value={config.launched ? "Live" : "Pre-launch"} />
+            <Stat label="Program ID" value={formatAddress(PROGRAM_ID.toBase58())} />
+            <Stat label="Status" value={config.launched ? "Live" : "Pre-launch"} />
             <Stat label="Current cycle" value={`#${cycleId}`} />
-            <Stat label="Fee"           value={`${config.platformFeeBps / 100}%`} />
-            <Stat label="SOL in cycle"  value={formatSol(solContrib)} />
-            <Stat label="Total supply"  value={formatLitter(config.totalSupply.toNumber())} />
+            <Stat label="Fee" value={`${config.platformFeeBps / 100}%`} />
+            <Stat label="SOL in cycle" value={formatSol(solContrib)} />
+            <Stat label="Total supply" value={formatLitter(config.totalSupply.toNumber())} />
           </div>
-          <ProgressBar
-            value={progress}
-            label={`Buyback threshold: ${BUYBACK_THRESHOLD_SOL} SOL`}
-          />
+          <ProgressBar value={progress} label={`Buyback threshold: ${BUYBACK_THRESHOLD_SOL} SOL`} />
         </CardContent>
       </Card>
 
@@ -169,8 +157,7 @@ export function AdminPanel() {
         </CardHeader>
         <CardContent className="pt-0 space-y-3">
           <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-            Verifies the 5 SOL threshold on-chain. Then perform the Jupiter swap
-            off-chain and call Record Buyback with the $LITTER received.
+            Verifies the 5 SOL threshold on-chain. Then perform the Jupiter swap off-chain and call Record Buyback with the $LITTER received.
           </p>
           <Button
             onClick={handleBuyback}
@@ -180,9 +167,7 @@ export function AdminPanel() {
             variant={thresholdMet ? "primary" : "secondary"}
           >
             <Zap className="w-4 h-4" />
-            {thresholdMet
-              ? "Trigger buyback"
-              : `Need ${BUYBACK_THRESHOLD_SOL} SOL (${progress.toFixed(1)}% reached)`}
+            {thresholdMet ? "Trigger buyback" : `Need ${BUYBACK_THRESHOLD_SOL} SOL (${progress.toFixed(1)}% reached)`}
           </Button>
         </CardContent>
       </Card>
@@ -192,15 +177,12 @@ export function AdminPanel() {
         <CardHeader>
           <div className="flex items-center gap-2">
             <RotateCcw className="w-4 h-4 text-[var(--gold)]" />
-            <p className="text-sm text-[var(--text-primary)] font-medium">
-              Record buyback result
-            </p>
+            <p className="text-sm text-[var(--text-primary)] font-medium">Record buyback result</p>
           </div>
         </CardHeader>
         <CardContent className="pt-0 space-y-3">
           <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-            Enter the $LITTER received from the off-chain Jupiter swap. This
-            unlocks claims for all contributors in the current cycle.
+            Enter the $LITTER received from the off-chain Jupiter swap. This unlocks claims for all contributors in the current cycle.
           </p>
           <div className="flex gap-2">
             <input
@@ -232,7 +214,7 @@ export function AdminPanel() {
                 Log
               </span>
             </div>
-            {error  && <p className="text-xs text-red-400  font-mono">{error}</p>}
+            {error && <p className="text-xs text-red-400 font-mono">{error}</p>}
             {lastTx && (
               <p className="text-xs text-green-400 font-mono break-all">
                 ✔{" "}
