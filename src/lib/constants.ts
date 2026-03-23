@@ -1,8 +1,9 @@
 import { PublicKey } from "@solana/web3.js";
 
 // ── Deployed program ──────────────────────────────────────────────────────────
+// Updated: 2026-03-23 - Fixed decimal bug (total_tokens_contributed)
 export const PROGRAM_ID = new PublicKey(
-  "GbDxASiScq4SNjq3Nj5iqYNSkCeyuTLTHSE64pxyAQeD"
+  "CEDiGk9JkY3mRS4RdhwXMZeHJPbQCbsDGzS35NHfdfDp"
 );
 
 // ── RPC ───────────────────────────────────────────────────────────────────────
