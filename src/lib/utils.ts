@@ -24,6 +24,7 @@ export function formatLitter(amount: number, decimals = 2): string {
 
 // Format raw token units (6 decimals for USDC-like tokens)
 export function formatTokens(amount: number, decimals = 2): string {
+  if (!amount || amount === 0) return "0";
   // For 6-decimal tokens, show as whole number if large, otherwise with decimals
   const displayAmount = amount / 1_000_000;
   return displayAmount.toLocaleString(undefined, {
@@ -47,6 +48,7 @@ export function formatAddress(address: string, chars = 4): string {
 
 // cycleProgress accepts raw token units and threshold in same units
 export function cycleProgress(amount: number, threshold: number): number {
+  if (!amount || !threshold || threshold === 0) return 0;
   return Math.min((amount / threshold) * 100, 100);
 }
 
