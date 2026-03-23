@@ -81,7 +81,7 @@ export function ClaimPanel() {
 
           result.push({
             cycleId:             i,
-            totalTokensContributed: totalSol,
+            totalTokensContributed: totalTokens,
             totalLitterOwed:     totalLitter,
             startTimestamp:      cycle.startTimestamp.toNumber(),
             userContribution,
