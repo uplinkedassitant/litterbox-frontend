@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useWallet } from "@solana/wallet-adapter-react";
 import { useLitterboxProgram } from "@/hooks/useLitterboxProgram";
 import { useProgramState } from "@/hooks/useProgramState";
@@ -35,10 +36,8 @@ export function LaunchPanel() {
     if (!program || !publicKey || !config) return;
     setLaunching(true);
     setError(null);
-
     try {
       const [configPda] = getConfigPda();
-
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const sig = await (program.methods as any)
         .launch()
@@ -47,7 +46,6 @@ export function LaunchPanel() {
           authority: publicKey,
         })
         .rpc();
-
       setLastTx(sig);
       await refetch();
     } catch (e: unknown) {
@@ -85,10 +83,14 @@ export function LaunchPanel() {
       </CardHeader>
       <CardContent className="pt-0 space-y-3">
         <p className="text-xs text-[var(--text-muted)] leading-relaxed">
-          Launch the program to mint the $LITTER token supply and enable the full cycle.
-          This is a one-time action.
+          Launch the program to mint the $LITTER token supply and enable the full cycle. This is a one-time action.
         </p>
-        <Button onClick={handleLaunch} loading={launching} className="w-full" variant="primary">
+        <Button
+          onClick={handleLaunch}
+          loading={launching}
+          className="w-full"
+          variant="primary"
+        >
           <Rocket className="w-4 h-4" />
           {launching ? "Launching..." : "Launch Program"}
         </Button>
