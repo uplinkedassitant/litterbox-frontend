@@ -23,7 +23,7 @@ import { Gift, CheckCircle } from "lucide-react";
 
 interface ClaimableCycle {
   cycleId:             number;
-  totalSolContributed: number;
+  totalTokensContributed: number;
   totalLitterOwed:     number;
   startTimestamp:      number;
   userContribution:    number;
@@ -53,7 +53,7 @@ export function ClaimPanel() {
       try {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const contributor = await (program.account as any).contributor.fetch(contributorPda);
-        userContribution = contributor.totalSolContributed.toNumber();
+        userContribution = contributor.totalTokensContributed.toNumber();
       } catch { /* no contributions yet */ }
 
       const result: ClaimableCycle[] = [];
@@ -66,9 +66,9 @@ export function ClaimPanel() {
           const totalLitter = cycle.totalLitterOwed.toNumber();
           if (totalLitter === 0) continue;
 
-          const totalSol = cycle.totalSolContributed.toNumber();
-          const estLitter = totalSol > 0
-            ? Math.floor((userContribution / totalSol) * totalLitter)
+          const totalTokens = cycle.totalTokensContributed.toNumber();
+          const estLitter = totalTokens > 0
+            ? Math.floor((userContribution / totalTokens) * totalLitter)
             : 0;
 
           const [receiptPda] = getClaimReceiptPda(i, publicKey);
@@ -81,7 +81,7 @@ export function ClaimPanel() {
 
           result.push({
             cycleId:             i,
-            totalSolContributed: totalSol,
+            totalTokensContributed: totalSol,
             totalLitterOwed:     totalLitter,
             startTimestamp:      cycle.startTimestamp.toNumber(),
             userContribution,

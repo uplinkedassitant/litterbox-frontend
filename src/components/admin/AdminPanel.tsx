@@ -111,8 +111,9 @@ export function AdminPanel() {
   }
 
   const cycleId = config.currentCycle.toNumber();
-  const solContrib = currentCycle?.totalSolContributed.toNumber() ?? 0;
-  const progress = cycleProgress(solContrib, BUYBACK_THRESHOLD_SOL);
+  const tokensContributed = currentCycle?.totalTokensContributed.toNumber() ?? 0;
+  const BUYBACK_THRESHOLD_TOKENS = 5_000_000_000; // 5B token units
+  const progress = cycleProgress(tokensContributed, BUYBACK_THRESHOLD_TOKENS);
   const thresholdMet = progress >= 100;
 
   return (
@@ -140,10 +141,10 @@ export function AdminPanel() {
             <Stat label="Status" value={config.launched ? "Live" : "Pre-launch"} />
             <Stat label="Current cycle" value={`#${cycleId}`} />
             <Stat label="Fee" value={`${config.platformFeeBps / 100}%`} />
-            <Stat label="SOL in cycle" value={formatSol(solContrib)} />
+            <Stat label="Tokens contributed" value={tokensContributed.toLocaleString()} />
             <Stat label="Total supply" value={formatLitter(config.totalSupply.toNumber())} />
           </div>
-          <ProgressBar value={progress} label={`Buyback threshold: ${BUYBACK_THRESHOLD_SOL} SOL`} />
+          <ProgressBar value={progress} label={`Buyback threshold: ${BUYBACK_THRESHOLD_TOKENS.toLocaleString()} tokens`} />
         </CardContent>
       </Card>
 
@@ -167,7 +168,7 @@ export function AdminPanel() {
             variant={thresholdMet ? "primary" : "secondary"}
           >
             <Zap className="w-4 h-4" />
-            {thresholdMet ? "Trigger buyback" : `Need ${BUYBACK_THRESHOLD_SOL} SOL (${progress.toFixed(1)}% reached)`}
+            {thresholdMet ? "Trigger buyback" : `Need ${BUYBACK_THRESHOLD_TOKENS.toLocaleString()} tokens (${progress.toFixed(1)}% reached)`}
           </Button>
         </CardContent>
       </Card>
