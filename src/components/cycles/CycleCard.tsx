@@ -4,23 +4,27 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/Card";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Badge } from "@/components/ui/Badge";
-import { formatSol, cycleProgress, timeAgo } from "@/lib/utils";
-import { BUYBACK_THRESHOLD_SOL } from "@/lib/constants";
+import { formatTokens, cycleProgress, timeAgo } from "@/lib/utils";
 import { CycleState, ConfigState } from "@/hooks/useProgramState";
 import { Activity, Clock } from "lucide-react";
 
+// Buyback threshold in raw token units (6 decimals)
+// 5_000_000_000 = 5 tokens at 6 decimals
+const BUYBACK_THRESHOLD_TOKENS = 5_000_000_000;
+
 interface CycleCardProps {
-  cycle:            CycleState;
-  config:           ConfigState;
-  userContribution?: number; // raw lamports
+  cycle: CycleState;
+  config: ConfigState;
+  userContribution?: number; // raw token units
 }
 
 export function CycleCard({ cycle, config, userContribution }: CycleCardProps) {
-  const totalSol   = cycle.totalSolContributed.toNumber();
-  const progress   = cycleProgress(totalSol, BUYBACK_THRESHOLD_SOL);
-  const isReady    = progress >= 100;
-  const cycleId    = cycle.cycleId.toNumber();
-  const startTs    = cycle.startTimestamp.toNumber();
+  // Use total_tokens_contributed (raw token units, not SOL)
+  const totalTokens = cycle.totalTokensContributed.toNumber();
+  const progress = cycleProgress(totalTokens, BUYBACK_THRESHOLD_TOKENS);
+  const isReady = progress >= 100;
+  const cycleId = cycle.cycleId.toNumber();
+  const startTs = cycle.startTimestamp.toNumber();
 
   return (
     <motion.div
@@ -30,6 +34,7 @@ export function CycleCard({ cycle, config, userContribution }: CycleCardProps) {
     >
       <Card variant="elevated" className="overflow-hidden">
         <div className="h-px w-full bg-gradient-to-r from-transparent via-[var(--gold)] to-transparent opacity-40" />
+        
         <CardContent className="pt-5 space-y-5">
           {/* Header */}
           <div className="flex items-start justify-between">
@@ -50,14 +55,17 @@ export function CycleCard({ cycle, config, userContribution }: CycleCardProps) {
           {/* Progress */}
           <ProgressBar
             value={progress}
-            label={`${formatSol(totalSol)} of ${BUYBACK_THRESHOLD_SOL} SOL`}
+            label={`${formatTokens(totalTokens)} of ${formatTokens(BUYBACK_THRESHOLD_TOKENS)} tokens`}
           />
 
           {/* Stats */}
           <div className="grid grid-cols-3 gap-3 pt-1">
-            <Stat label="Contributed"  value={formatSol(totalSol)} />
-            <Stat label="Your share"   value={userContribution != null ? formatSol(userContribution) : "—"} />
-            <Stat label="Fee"          value={`${config.platformFeeBps / 100}%`} />
+            <Stat label="Contributed" value={formatTokens(totalTokens)} />
+            <Stat
+              label="Your share"
+              value={userContribution != null ? formatTokens(userContribution) : "—"}
+            />
+            <Stat label="Fee" value={`${(config.platformFeeBps / 100).toFixed(2)}%`} />
           </div>
 
           {/* Footer */}
@@ -74,7 +82,9 @@ export function CycleCard({ cycle, config, userContribution }: CycleCardProps) {
 function Stat({ label, value }: { label: string; value: string }) {
   return (
     <div className="space-y-0.5">
-      <p className="text-[10px] uppercase tracking-widest text-[var(--text-muted)] font-mono">{label}</p>
+      <p className="text-[10px] uppercase tracking-widest text-[var(--text-muted)] font-mono">
+        {label}
+      </p>
       <p className="text-sm text-[var(--text-primary)] font-mono">{value}</p>
     </div>
   );
