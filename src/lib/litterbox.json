@@ -9,7 +9,8 @@
     {
       "name": "buyback",
       "docs": [
-        "Verify buyback threshold is met and emit an off-chain swap instruction."
+        "Verify the buyback threshold is met and emit an off-chain swap signal.",
+        "Authority must then call record_buyback with the $LITTER amount received."
       ],
       "discriminator": [
         106,
@@ -268,7 +269,8 @@
         {
           "name": "claim_receipt",
           "docs": [
-            "Per-user, per-cycle claim receipt — created on first claim, prevents double claims."
+            "Per-user, per-cycle claim receipt — init (not init_if_needed) ensures",
+            "a second claim attempt fails at account validation before reaching the handler."
           ],
           "writable": true,
           "pda": {
@@ -299,7 +301,7 @@
         {
           "name": "airdrop_vault",
           "docs": [
-            "Airdrop vault is the ATA of the config PDA for the platform mint."
+            "Airdrop vault — ATA of the config PDA for the platform mint."
           ],
           "writable": true,
           "pda": {
@@ -651,7 +653,11 @@
         {
           "name": "contributor",
           "docs": [
-            "Contributor PDA — created on first deposit if it doesn't exist yet."
+            "Contributor PDA — created on first deposit, reused on subsequent ones.",
+            "The seeds include authority.key() so only the depositor can supply their",
+            "own contributor account. The explicit constraint below adds a belt-and-",
+            "suspenders check that the stored authority matches after init_if_needed",
+            "skips the init path on subsequent calls."
           ],
           "writable": true,
           "pda": {
@@ -782,7 +788,7 @@
           "name": "token_vault",
           "docs": [
             "Program-owned vault that holds deposited tokens.",
-            "Plain PDA token account (not an ATA) seeded with [b\"vault\", mint]."
+            "Plain PDA token account seeded with [b\"vault\", mint]."
           ],
           "writable": true,
           "pda": {
@@ -930,7 +936,7 @@
         {
           "name": "first_cycle",
           "docs": [
-            "First cycle (cycle 0) — seeded [b\"cycle\", 0u64.to_le_bytes()]."
+            "Genesis cycle (cycle 0) — seeded [b\"cycle\", 0u64.to_le_bytes()]."
           ],
           "writable": true,
           "pda": {
@@ -1019,7 +1025,7 @@
           "name": "platform_token_mint",
           "docs": [
             "Platform token mint — PDA seeded [b\"platform_token\"].",
-            "The PDA itself is the mint authority so it can sign MintTo via CpiContext::new_with_signer."
+            "The PDA itself is the mint authority so it can sign MintTo via new_with_signer."
           ],
           "writable": true,
           "pda": {
@@ -1142,9 +1148,8 @@
         {
           "name": "cycle_1",
           "docs": [
-            "First post-launch cycle — seeded [b\"cycle\", 1u64.to_le_bytes()].",
-            "MUST be created here because handler sets current_cycle = 1.",
-            "Without this, all deposit() calls fail with AccountNotInitialized."
+            "First post-launch cycle — created atomically so deposits can start immediately.",
+            "MUST be created here because handler sets current_cycle = 1."
           ],
           "writable": true,
           "pda": {
@@ -1196,9 +1201,99 @@
       "args": []
     },
     {
+      "name": "next_cycle",
+      "docs": [
+        "Advance to the next deposit cycle (authority only).",
+        "Requires the current cycle to have a recorded buyback.",
+        "Creates the next cycle PDA and resets config.current_cycle."
+      ],
+      "discriminator": [
+        65,
+        175,
+        174,
+        124,
+        69,
+        233,
+        84,
+        200
+      ],
+      "accounts": [
+        {
+          "name": "config",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  111,
+                  110,
+                  102,
+                  105,
+                  103
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "completed_cycle",
+          "docs": [
+            "The current (completed) cycle — must have a recorded buyback before",
+            "the authority can advance to the next cycle."
+          ],
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99,
+                  121,
+                  99,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "config.current_cycle",
+                "account": "Config"
+              }
+            ]
+          }
+        },
+        {
+          "name": "next_cycle",
+          "docs": [
+            "The next cycle PDA — created here so deposits can start immediately.",
+            "Seeded with [b\"cycle\", (current_cycle + 1).to_le_bytes()]."
+          ],
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "docs": [
+            "Contributor PDA — reset so the contributor starts fresh in the new cycle.",
+            "Passing the contributor is optional per-user; the authority calls next_cycle",
+            "once to advance the global state, then contributors reset lazily on their",
+            "first deposit into the new cycle (handled in deposit.rs)."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
       "name": "record_buyback",
       "docs": [
-        "Record the $LITTER received from an off-chain Jupiter swap (authority only)."
+        "Record the $LITTER received from an off-chain Jupiter swap (authority only).",
+        "Can only be called once per cycle — prevents overwriting claim accounting."
       ],
       "discriminator": [
         94,
@@ -1213,9 +1308,6 @@
       "accounts": [
         {
           "name": "config",
-          "docs": [
-            "Config is included so we can verify the caller is the program authority."
-          ],
           "pda": {
             "seeds": [
               {
@@ -1256,9 +1348,6 @@
         },
         {
           "name": "authority",
-          "docs": [
-            "Must be the program authority — enforced by the config constraint above."
-          ],
           "writable": true,
           "signer": true
         },
@@ -1383,6 +1472,26 @@
       "code": 6009,
       "name": "InvalidAmount",
       "msg": "Invalid amount: must be greater than zero"
+    },
+    {
+      "code": 6010,
+      "name": "BuybackAlreadyRecorded",
+      "msg": "Buyback already recorded for this cycle — cannot overwrite"
+    },
+    {
+      "code": 6011,
+      "name": "CycleNotComplete",
+      "msg": "Cycle is not yet complete — record_buyback must be called first"
+    },
+    {
+      "code": 6012,
+      "name": "AirdropVaultEmpty",
+      "msg": "Airdrop vault is empty — all tokens have been distributed"
+    },
+    {
+      "code": 6013,
+      "name": "ArithmeticError",
+      "msg": "Arithmetic error"
     }
   ],
   "types": [
@@ -1437,18 +1546,16 @@
           },
           {
             "name": "treasury_bump",
-            "type": "u8"
-          },
-          {
-            "name": "fee_vault_bump",
-            "type": "u8"
-          },
-          {
-            "name": "airdrop_vault_bump",
+            "docs": [
+              "Bump for this config PDA — used as signer seed for airdrop vault transfers."
+            ],
             "type": "u8"
           },
           {
             "name": "platform_token_bump",
+            "docs": [
+              "Bump for the platform token mint PDA — used as signer seed for MintTo."
+            ],
             "type": "u8"
           },
           {
@@ -1481,7 +1588,7 @@
     {
       "name": "Contributor",
       "docs": [
-        "Per-user contribution state.",
+        "Per-user contribution state across all cycles.",
         "Seeded with [b\"contributor\", authority.key()]."
       ],
       "type": {
@@ -1492,7 +1599,11 @@
             "type": "pubkey"
           },
           {
-            "name": "total_sol_contributed",
+            "name": "total_tokens_contributed",
+            "docs": [
+              "Raw token units deposited by this contributor in the current cycle (net of fees).",
+              "Reset to 0 by next_cycle so each cycle tracks independent contributions."
+            ],
             "type": "u64"
           },
           {
@@ -1520,16 +1631,33 @@
             "type": "u64"
           },
           {
-            "name": "total_sol_contributed",
+            "name": "total_tokens_contributed",
+            "docs": [
+              "Sum of all raw token units deposited (net of fees) across all depositors.",
+              "Used as the denominator for pro-rata share calculations within this cycle.",
+              "NOTE: this is in the deposited token's native units, not lamports."
+            ],
             "type": "u64"
           },
           {
             "name": "total_litter_owed",
+            "docs": [
+              "$LITTER (in 6-decimal units) allocated to this cycle by record_buyback.",
+              "Set exactly once by the authority after the off-chain Jupiter swap."
+            ],
             "type": "u64"
           },
           {
             "name": "start_timestamp",
             "type": "i64"
+          },
+          {
+            "name": "buyback_recorded",
+            "docs": [
+              "Set to true by record_buyback. Prevents the authority from overwriting",
+              "an already-recorded buyback and corrupting claim accounting."
+            ],
+            "type": "bool"
           }
         ]
       }
