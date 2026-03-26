@@ -53,7 +53,11 @@ export function TokenTable() {
   };
 
   const handleDeposit = async (token: TokenInfo) => {
-    if (!publicKey || !program || !config || !currentCycle) return;
+    if (!publicKey || !program || !config || !currentCycle) {
+      setError("Wallet not properly connected. Please disconnect and reconnect.");
+      setTimeout(() => setError(null), 5000);
+      return;
+    }
     
     const inputAmount = amounts[token.mint] || "0";
     const amountNum = parseFloat(inputAmount);
@@ -123,7 +127,18 @@ export function TokenTable() {
     }
   };
 
-  if (!publicKey) return null;
+  // Don't render table if wallet isn't truly connected
+  if (!publicKey) {
+    return (
+      <Card>
+        <CardContent className="py-16 text-center">
+          <p className="text-xl text-litter-muted">
+            Please connect your wallet first
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
 
   if (tokensLoading) {
     return (
