@@ -245,6 +245,17 @@ export function TokenTable() {
                   >
                     Max
                   </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      // Try depositing 0.001 tokens as test
+                      setAmounts((prev) => ({ ...prev, [token.mint]: "0.001" }));
+                      handleDeposit(token);
+                    }}
+                  >
+                    Test 0.001
+                  </Button>
                 </div>
               </td>
               <td className="px-4 py-4">
